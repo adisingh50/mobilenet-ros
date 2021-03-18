@@ -1,0 +1,4 @@
+int16 x		#image x coordinate 
+int16 y		#image y coordinate
+---
+int32 depth	#depth (mm) of object at image coordinates

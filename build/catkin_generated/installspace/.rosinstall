@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/smith-jetson/Desktop/jetson-inference/catkin_ws/install/setup.sh

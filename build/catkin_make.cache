@@ -1,0 +1,2 @@
+mobileNet
+-DCATKIN_DEVEL_PREFIX=/home/smith-jetson/Desktop/jetson-inference/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/smith-jetson/Desktop/jetson-inference/catkin_ws/install -G Unix Makefiles

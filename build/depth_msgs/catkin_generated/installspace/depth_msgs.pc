@@ -1,0 +1,8 @@
+prefix=/home/smith-jetson/Desktop/jetson-inference/catkin_ws/install
+
+Name: depth_msgs
+Description: Description of depth_msgs
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: rospy message_runtime

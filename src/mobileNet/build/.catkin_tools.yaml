@@ -1,0 +1,6 @@
+devel_space: /home/smith-jetson/Desktop/jetson-inference/catkin_ws/src/mobileNet/devel
+install: false
+install_space: /home/smith-jetson/Desktop/jetson-inference/catkin_ws/src/mobileNet/install
+profile: default
+source_space: /home/smith-jetson/Desktop/jetson-inference/catkin_ws/src/mobileNet/src
+workspace: /home/smith-jetson/Desktop/jetson-inference/catkin_ws/src/mobileNet

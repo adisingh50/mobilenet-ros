@@ -1,0 +1,8 @@
+prefix=/home/smith-jetson/Desktop/jetson-inference/catkin_ws/install
+
+Name: mobileNet
+Description: Description of mobileNet
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: rospy message_runtime
