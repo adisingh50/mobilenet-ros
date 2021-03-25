@@ -35,7 +35,7 @@ class DepthInfo():
         self.img_height = height
         self.img_width = width
 
-        rospy.loginfo(self.np_matrix[240, 424])
+        rospy.loginfo('{} {}'.format(height, width))
 
 def main():
     rospy.init_node('depth_server')
