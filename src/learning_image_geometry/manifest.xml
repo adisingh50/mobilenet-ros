@@ -1,0 +1,17 @@
+<package>
+  <description brief="learning_image_geometry">
+
+     learning_image_geometry
+
+  </description>
+  <author>Smith Jetson</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/learning_image_geometry</url>
+  <depend package="image_geometry"/>
+  <depend package="image_transport"/>
+  <depend package="cv_bridge"/>
+  <depend package="tf"/>
+  <depend package="image_view"/>
+
+</package>

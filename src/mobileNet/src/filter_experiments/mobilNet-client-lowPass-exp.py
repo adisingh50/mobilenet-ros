@@ -11,6 +11,7 @@ import jetson.utils
 import cv2
 import math
 import time
+from lowpass import LowPass
 
 net = jetson.inference.detectNet("ssd-mobilenet-v2", threshold=0.5)
 
@@ -29,8 +30,15 @@ class ImageInfo():
         self.mm_pix = 0.003 # width of a pixel is .003 mm
         self.img_center = (640, 360) #center of the image plane is (640, 360)
         self.factor_scale = 1.509 #ratio between color matrix  dims and depth matrix dims
+        
+        self.lowPass = LowPass()
 
-        with open('./ssd_coco_labels.txt', 'r') as f:
+        #lists used for experiments
+        self.times_list = []
+        self.depths_list = []
+        self.start_time = time.time()
+
+        with open('.././ssd_coco_labels.txt', 'r') as f:
             self.classes = f.read().splitlines()
 
     def deproject_cam_coords(self, obj_center, depth):
@@ -145,8 +153,18 @@ class ImageInfo():
             pass
             #self.deproject_cam_coords(center, resp.depth)
             depth = self.getDepthFromNeighborPixels(center)
-            depthLabel = '{}m'.format(depth/1000.0)
-            cv2.putText(img, depthLabel, (topLeft_x, topLeft_y+40), self.font, self.fontScale, self.blueColor, self.thickness) #draw depth in meters
+            self.lowPass.addDepth(depth)
+            acc_depth = self.lowPass.getDepth()
+            print(acc_depth)
+
+            if acc_depth > 0:
+                depthLabel = '{}m'.format(acc_depth/1000.0)
+
+                #add new data point to both lists for visualization
+                self.times_list.append(time.time() - self.start_time)
+                self.depths_list.append(acc_depth/1000.0)
+
+                cv2.putText(img, depthLabel, (topLeft_x, topLeft_y+40), self.font, self.fontScale, self.blueColor, self.thickness) #draw depth in meters
 
         #draw all info on cv2 display
         cv2.rectangle(img, (topLeft_x, topLeft_y), (topLeft_x + width, topLeft_y + height), self.blueColor, self.thickness) #draw bounding box
@@ -171,16 +189,29 @@ class ImageInfo():
         for detection in detections:
             np_image_rgb = self.drawBoundingBox(np_image_rgb, detection)
 
-        print(time.time())
         cv2.imshow('CV2 Capture', np_image_rgb)
         keyPress = cv2.waitKey(1)
 
 def main():
-    rospy.init_node('mobileNet_client')
-    imgObj = ImageInfo()
-    rospy.Subscriber('/camera/color/image_raw', Image, imgObj.callback)
+    try:
+        rospy.init_node('mobileNet_client')
+        imgObj = ImageInfo()
+        rospy.Subscriber('/camera/color/image_raw', Image, imgObj.callback)
 
-    rospy.spin()
+        rospy.spin()
+    except KeyboardInterrupt:
+        print('cntrl C clicked')
+    finally:
+
+        #save times list to file
+        with open('timesLowPass.txt', 'w') as times_filehandle:
+            for time in imgObj.times_list:
+               times_filehandle.write('{}\n'.format(time))
+
+        #save depths list to file
+        with open('depthsLowPass.txt', 'w') as depths_filehandle:
+            for depth in imgObj.depths_list:
+                depths_filehandle.write('{}\n'.format(depth))
 
 if __name__ == "__main__":
     main()

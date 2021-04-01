@@ -290,6 +290,9 @@ catkin_DIR:PATH=/opt/ros/melodic/share/catkin/cmake
 //The directory containing a CMake configuration file for cpp_common.
 cpp_common_DIR:PATH=/opt/ros/melodic/share/cpp_common/cmake
 
+//The directory containing a CMake configuration file for cv_bridge.
+cv_bridge_DIR:PATH=/opt/ros/melodic/share/cv_bridge/cmake
+
 //Value Computed by CMake
 depth_msgs_BINARY_DIR:STATIC=/home/smith-jetson/Desktop/jetson-inference/catkin_ws/build/depth_msgs
 
@@ -362,6 +365,12 @@ gtest_hide_internal_symbols:BOOL=OFF
 
 //Dependencies for the target
 gtest_main_LIB_DEPENDS:STATIC=general;-lpthread;general;gtest;
+
+//Value Computed by CMake
+learning_image_geometry_BINARY_DIR:STATIC=/home/smith-jetson/Desktop/jetson-inference/catkin_ws/build/learning_image_geometry
+
+//Value Computed by CMake
+learning_image_geometry_SOURCE_DIR:STATIC=/home/smith-jetson/Desktop/jetson-inference/catkin_ws/src/learning_image_geometry
 
 //Path to a library.
 lib:FILEPATH=/opt/ros/melodic/lib/librostime.so
